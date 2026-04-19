@@ -1,0 +1,9 @@
+CREATE TABLE IF NOT EXISTS estimates (
+    id INT PRIMARY KEY AUTOINCREMENT,
+    resource_type TEXT NOT NULL,
+    hours INT NOT NULL,
+    total_cost REAL NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+
