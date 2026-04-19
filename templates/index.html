@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Azure Guardian</title>
+<style>
+    body { 
+        background-color: #2e3440; /* Nord 8 */
+        color: #81a1c1; /* Nord 4 */
+        font-family: 'Fira Code', monospace;
+        padding: 50px;
+    }
+    .card { 
+        border: 1px solid #81a1c1; /* Nord 4 */
+        background-color: #2e3440; /* Nord 8 */
+        padding: 20px; 
+        border-radius: 5px; 
+        max-width: 500px; 
+        margin: auto;
+    }
+    input, select { 
+        background-color: #3b4252; /* Nord 7 */
+        color: #d8dee9; /* Nord 16 */
+        border: 1px solid #81a1c1; /* Nord 4 */
+        padding: 10px; 
+        width: 100%; 
+        margin-bottom: 10px;
+    }
+    button { 
+        background-color: #81a1c1; /* Nord 4 */
+        color: #2e3440; /* Nord 8 */
+        border: none; 
+        padding: 10px; 
+        width: 100%; 
+        cursor: pointer; 
+        font-weight: bold;
+    }
+    #hint { 
+        color: #a3be8c; /* Nord 6 */
+        font-size: 0.8em; 
+        margin-top: 10px; 
+        display: block; 
+    }
+</style></head>
+<body>
+    <div class="card">
+        <h1>[ Azure Cost Guardian ]</h1>
+        <label>Select Resource:</label>
+        <select id="res">
+            <option value="Standard_B1">B1 (Low Cost)</option>
+            <option value="Standard_B2">B2 (General Purpose)</option>
+            <option value="Basic_mySQL">MYSQL (Database)</option>
+        </select>
+        
+        <label>Usage Hours:</label>
+        <input type="number" id="hrs" placeholder="e.g. 24" min="0">
+        
+        <button onclick="calculate()">Calculate & Save to SQL</button>
+        
+        <h2 id="out">Total: $0.00</h2>
+        <code id="hint"></code>
+    </div>
+<div id="history-section" style="margin-top: 20px; font-size: 0.7em; border-top: 1px dashed #81a1c1;">
+    <p>Recent Logs (SQL):</p>
+    <ul id="history-list"></ul>
+</div>
+    <script>
+        async function calculate() {
+            const res = document.getElementById('res').value;
+            const hrs = document.getElementById('hrs').value;
+            
+            if(!hrs || hrs < 0) { alert("Please enter valid hours"); return; }
+
+            const response = await fetch('/estimate', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({resource: res, hours: hrs})
+            });
+            
+            const data = await response.json();
+            document.getElementById('out').innerText = `Total: $${data.cost}`;
+            document.getElementById('hint').innerText = `CLI Hint: ${data.template_hint}`;
+        }
+    </script>
+</body>
+</html>
