@@ -1,18 +1,32 @@
-Azure Cost Simulator
-Overview
+# Azure-Simulate-Guardian
+> Azure cost simulation tool with Flask and SQLite backend.
 
-A lightweight Flask-based tool that simulates Azure resource costs and generates deployment suggestions.
+![Python](https://img.shields.io/badge/python-3.10+-blue) ![Flask](https://img.shields.io/badge/flask-2.x-lightgrey) ![Azure](https://img.shields.io/badge/azure-simulation-0078D4)
 
-Features
-Cloud cost estimation engine
-Azure CLI command generator
-SQLite-based tracking system
-Simple web interface for input/output
-Tech Stack
-Python (Flask)
-SQLite
-HTML/CSS
-Future Work
-Azure Pricing API integration
-ARM/Bicep export automation
-Multi-user support   V3.0: User authentication and multi-subscription support.
+## What it does
+Simulates Azure infrastructure behavior and models resource governance.
+Translates cloud architecture configs into cost calculation logic.
+Outputs results via a web dashboard backed by SQLite.
+
+## Tech Stack
+- Python, Flask, SQLite, HTML
+
+## Quick Start
+```bash
+git clone https://github.com/Husseinuahmedc/Azure-Simulate-Guardian
+cd Azure-Simulate-Guardian
+pip install -r requirements.txt
+python app.py
+```
+
+## Architecture
+```
+User Input → Flask App → Simulation Logic → SQLite DB
+                                         ↓
+                                  Cost Calculation
+                                         ↓
+                                  Output Dashboard
+```
+
+## Notes
+No real Azure subscription needed. All simulation runs locally.
